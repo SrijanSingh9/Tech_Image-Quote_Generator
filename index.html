@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Tech Quotes</title>
+    <style>
+        #quote-container {
+            position: relative;
+            text-align: center;
+        }
+
+        #quote-image {
+            max-width: 100%;
+        }
+
+        #quote-text-container {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        #college-club-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        #college-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #club-name {
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="quote-container">
+        <img id="quote-image" src="" alt="Tech Quote Image">
+        <div id="quote-text-container">
+            <p id="quote-text">Loading...</p>
+        </div>
+        <button id="new-quote-button">New Quote</button>
+    </div>
+
+    <div id="college-club-container">
+        <p id="college-name">Guru Nanak Dev Engineering College Ludhiana</p>
+        <p id="club-name">Data Science Club</p>
+    </div>
+
+    <script>
+        const unsplashAccessKey = 'nD-fDrCFXNgQWQmaFIJhBvQh6HmGxWZeX_p5u3oEPps';
+
+        const getRandomQuote = () => {
+            // Fetch a random tech quote (you can replace this with your source)
+            const techQuotes = [
+            "Technology is best when it brings people together. - Matt Mullenweg",
+                "The technology you use impresses no one. The experience you create with it is everything. - Sean Gerety",
+                "“The science of today is the technology of tomorrow. - Edward Teller”",
+                "“The advance of technology is based on making it fit in so that you don’t really even notice it, so it’s part of everyday life. - Bill Gates”", "“It has become appallingly obvious that our technology has exceeded our humanity. - Albert Einstein”","Any sufficiently advanced technology is equivalent to magic. - Arthur C. Clarke",
+                "Technology is anything that wasn’t around when you were born. - Alan Kay"
+                // Add more quotes here
+            ];
+
+            const randomIndex = Math.floor(Math.random() * techQuotes.length);
+            return techQuotes[randomIndex];
+        };
+
+        const getUnsplashImage = () => {
+            
+            const query = 'tech';
+            const apiUrl = `https://api.unsplash.com/photos/random?query=${query}&client_id=${unsplashAccessKey}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const imageUrl = data.urls.regular;
+                    document.getElementById('quote-image').src = imageUrl;
+                })
+                .catch(error => console.error(error));
+        };
+
+        const updateQuote = () => {
+            const quoteText = getRandomQuote();
+            document.getElementById('quote-text').textContent = quoteText;
+            getUnsplashImage();
+        };
+
+        document.getElementById('new-quote-button').addEventListener('click', updateQuote);
+
+        // Initial load
+        updateQuote();
+    </script>
+</body>
+</html>
